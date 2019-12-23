@@ -34,7 +34,7 @@ $(function () {
 				type: "splineArea",
 				yValueFormatString: "$###,###.##",
 				dataPoints: [
-					{ x: new Date("1 Jan 2019"), y: 173250 },
+					{ x: new Date("1 Jan 2019"), y: 2000000 },
 					{ x: new Date("1 Feb 2019"), y: 195300 },
 					{ x: new Date("1 Mar 2019"), y: 214200 },
 					{ x: new Date("1 Apr 2019"), y: 207900 },
@@ -61,11 +61,7 @@ $(function () {
 		usersSplineChart
 	];
 	
-	function populateMonthlyRevenueByCategoryChart() {
-		for (var prop in dataMonthlyRevenueByCategory)
-			if  (dataMonthlyRevenueByCategory.hasOwnProperty(prop))
-				monthlyRevenueByCategoryColumnChart.options.data.push( dataMonthlyRevenueByCategory[prop] );
-	}
+
 	
 	function monthlyRevenueByCategoryDrilldownHandler(e) {
 		monthlyRevenueByCategoryColumnChart.options.data = [];
@@ -79,55 +75,6 @@ $(function () {
 
 		monthlyRevenueByCategoryColumnChart.render();
 	}
-	
-	var visitorsChartHeadingDOM = $("#visitors-chart-heading"),
-			visitorsChartBackButtonDOM = $("#visitors-chart-back-button"),
-			visitorsChartTagDOM = $("#visitors-chart-tag");
-	
-	function visitorsChartDrilldownHandler (e) {
-		visitorsChart = new CanvasJS.Chart("visitors-chart", visitorsDrilldownedChartOptions);
-		visitorsChart.options.data = dataVisitors[e.dataPoint.name];
-		visitorsChart.render();
-		
-		// DOM Manipulations
-		visitorsChartHeadingDOM.html(e.dataPoint.name);
-		visitorsChartBackButtonDOM.toggleClass("invisible");
-		visitorsChartTagDOM.toggleClass("invisible");
-	}
-	
-	// binding click event to visitors chart back button to drill up to "New Vs Returning Visitors" doughnut chart
-	visitorsChartBackButtonDOM.on("click", function () {
-		visitorsChart = new CanvasJS.Chart("visitors-chart", newVsReturningVisitorsChartOptions);
-		visitorsChart.options.data = dataVisitors["New vs Returning Visitors"];
-		visitorsChart.render();
-		
-		// DOM Manipulations
-		visitorsChartHeadingDOM.html("New vs Returning Visitors");
-		visitorsChartBackButtonDOM.toggleClass("invisible");
-		visitorsChartTagDOM.toggleClass("invisible");
-	});
-	
-	// chart properties cutomized further based on screen width
-	function chartPropertiesCustomization () {
-		if ($(window).outerWidth() >= 1200 ) {
-			
-			annualRevenueByCategoryPieChart.options.legend.horizontalAlign = "left";
-			annualRevenueByCategoryPieChart.options.legend.verticalAlign = "center";
-			annualRevenueByCategoryPieChart.render();
-			
-			visitorsChartTagDOM.css("position", "absolute");
-			
-		} else if ($(window).outerWidth() < 1200) {
-			
-			annualRevenueByCategoryPieChart.options.legend.horizontalAlign = "center";
-			annualRevenueByCategoryPieChart.options.legend.verticalAlign = "top";
-			annualRevenueByCategoryPieChart.render();
-			
-			visitorsChartTagDOM.css("position", "static");
-			
-		}
-	}
-	
 	function renderAllCharts() {
 		for (var i = 0; i < allCharts.length; i++)
 			allCharts[i].render();
