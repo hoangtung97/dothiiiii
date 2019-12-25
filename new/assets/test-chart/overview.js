@@ -61,7 +61,11 @@ $(function () {
 		usersSplineChart
 	];
 	
-
+	function populateMonthlyRevenueByCategoryChart() {
+		for (var prop in dataMonthlyRevenueByCategory)
+			if  (dataMonthlyRevenueByCategory.hasOwnProperty(prop))
+				monthlyRevenueByCategoryColumnChart.options.data.push( dataMonthlyRevenueByCategory[prop] );
+	}
 	
 	function monthlyRevenueByCategoryDrilldownHandler(e) {
 		monthlyRevenueByCategoryColumnChart.options.data = [];
